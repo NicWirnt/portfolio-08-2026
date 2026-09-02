@@ -1,0 +1,11 @@
+.next
+node_modules
+dist
+coverage
+.env
+.env*.local
+drizzle/meta
+*.tsbuildinfo
+.chrome-figma-capture*/
+.superpowers/
+codex-skills/
