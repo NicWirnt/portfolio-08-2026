@@ -8,4 +8,5 @@ drizzle/meta
 *.tsbuildinfo
 .chrome-figma-capture*/
 .superpowers/
+.worktrees/
 codex-skills/

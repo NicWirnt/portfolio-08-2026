@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import {
   motion,
@@ -101,56 +100,7 @@ export function HeroSection({
             transition={{ duration: 0.75, delay: 0.18 }}
             className="paper-card gradient-border relative overflow-hidden rounded-[2rem] p-3 shadow-[0_28px_90px_rgba(17,17,17,0.12)]"
           >
-            <div className="relative min-h-[400px] overflow-hidden rounded-[1.65rem] bg-[#111111] md:min-h-[430px]">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_58%_22%,rgba(14,165,233,0.42),transparent_34%),radial-gradient(circle_at_12%_82%,rgba(217,119,6,0.26),transparent_34%),linear-gradient(145deg,rgba(255,255,255,0.16),transparent_42%)]" />
-              <div className="absolute inset-6 rounded-full border border-[#f4f0e8]/15" />
-              <div className="absolute inset-12 rounded-full border border-[#f4f0e8]/10" />
-              <div className="absolute -right-20 top-14 h-56 w-56 rounded-full bg-sky-300/20 blur-3xl" />
-              <div className="absolute left-6 top-6 z-10 flex items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.28em] text-[#f4f0e8]/70">
-                <span className="h-2 w-2 rounded-full bg-sky-300 shadow-[0_0_18px_rgba(125,211,252,0.9)]" />
-                Studio profile
-              </div>
-              <div className="absolute right-5 top-5 z-10 grid h-16 w-16 place-items-center rounded-full bg-sky-400 text-lg font-black tracking-[-0.08em] text-[#111111] shadow-[0_18px_44px_rgba(14,165,233,0.34)]">
-                NW
-              </div>
-              <Image
-                src="/legacy-assets/profile.png"
-                alt="Nico Wiranata"
-                width={512}
-                height={512}
-                className="absolute inset-x-0 bottom-0 z-10 mx-auto h-[290px] w-auto object-contain drop-shadow-[0_32px_38px_rgba(0,0,0,0.38)] transition duration-500 hover:scale-[1.03] md:h-[350px]"
-                priority
-              />
-              <div className="absolute inset-x-5 bottom-5 z-20 flex items-end justify-between gap-5">
-                <div>
-                  <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-[#f4f0e8]/60">
-                    Full-stack / AI
-                  </p>
-                  <p className="mt-2 max-w-[12rem] text-4xl font-black uppercase leading-[0.82] tracking-[-0.08em] text-[#f4f0e8]">
-                    Applied AI
-                    <br />
-                    Engineer
-                  </p>
-                </div>
-                <div className="hidden rounded-2xl border border-white/10 bg-white/10 px-3 py-2 text-right backdrop-blur-md sm:block">
-                  <p className="text-[0.62rem] font-bold uppercase tracking-[0.22em] text-sky-200">
-                    Based in
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-[#f4f0e8]">
-                    Australia
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="mt-5 grid gap-4 md:grid-cols-[0.8fr_1.2fr]">
-              <p className="editorial-label">Currently</p>
-              <p className="text-sm leading-6 text-[#5f6b73]">
-                Building production-minded web systems with Next.js,
-                TypeScript, Neon Postgres, Drizzle ORM, and applied AI
-                workflows.
-              </p>
-            </div>
-            <div className="mt-5 grid grid-cols-3 gap-2 text-xs font-semibold text-[#111111]">
+            <div className="grid grid-cols-3 gap-2 text-xs font-semibold text-[#111111]">
               {["Next.js", "AI UX", "Postgres"].map((skill) => (
                 <span
                   key={skill}
@@ -160,7 +110,8 @@ export function HeroSection({
                 </span>
               ))}
             </div>
-            <div className="mt-5 flex flex-wrap gap-3 text-sm">
+
+            <div className="mt-3 flex flex-wrap gap-3 text-sm">
               <a
                 href="#contact"
                 className="inline-flex items-center gap-2 rounded-full bg-[#111111] px-4 py-2 text-[#f4f0e8] shadow-[0_14px_34px_rgba(17,17,17,0.14)] transition hover:-translate-y-0.5 hover:bg-sky-600 focus-ring"
