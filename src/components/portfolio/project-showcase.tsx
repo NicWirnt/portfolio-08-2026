@@ -3,143 +3,77 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, Grid2X2, List } from "lucide-react";
+import { ArrowUpRight, Grid2X2, List } from "lucide-react";
 import type { Project } from "@/lib/portfolio-content";
-import { Reveal } from "@/components/portfolio/reveal";
-import { ScrambleText } from "@/components/portfolio/text-effects";
 
-type ViewMode = "grid" | "list";
+const viewOptions = [
+  { mode: "list", label: "List", Icon: List },
+  { mode: "grid", label: "Grid", Icon: Grid2X2 }
+] as const;
 
 export function ProjectShowcase({ projects }: { projects: Project[] }) {
-  const [viewMode, setViewMode] = useState<ViewMode>("list");
+  const [viewMode, setViewMode] = useState<"list" | "grid">("list");
+  const isGrid = viewMode === "grid";
 
   return (
-    <section id="projects" className="px-5 py-28 md:px-6">
+    <section id="projects" aria-labelledby="projects-title" className="px-5 py-12 md:px-6">
       <div className="mx-auto max-w-7xl">
-        <Reveal className="editorial-rule grid gap-8 pt-8 lg:grid-cols-[0.52fr_1fr]">
+        <div className="editorial-rule flex flex-wrap items-end justify-between gap-5 pt-8">
           <div>
-            <p className="editorial-label">
-              <ScrambleText text="case studies" />
-            </p>
-            <h2 className="mt-4 text-5xl font-black uppercase leading-[0.9] tracking-[-0.08em] text-[#111111] md:text-7xl">
-              I build products
+            <p className="editorial-label">Case studies</p>
+            <h2 id="projects-title" className="mt-3 text-balance text-5xl font-black leading-none tracking-[-0.065em] sm:text-7xl">
+              Selected work
             </h2>
           </div>
-          <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
-            <p className="max-w-xl text-xl leading-8 tracking-[-0.03em] text-[#333333]">
-              Projects are presented as decisions, constraints, and outcomes —
-              not just screenshots. The admin area will let you add new studies
-              without touching the code.
-            </p>
-            <div className="flex w-fit rounded-full border border-black/15 p-1">
+          <div role="group" aria-label="Project layout" className="flex gap-1 rounded-lg border border-[var(--rule)] bg-white/40 p-1">
+            {viewOptions.map(({ mode, label, Icon }) => (
               <button
+                key={mode}
                 type="button"
-                onClick={() => setViewMode("list")}
-                className={`focus-ring inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm transition ${
-                  viewMode === "list"
-                    ? "bg-[#111111] text-[#f4f0e8]"
-                    : "text-[#5f6b73] hover:bg-black/[0.06]"
-                }`}
+                aria-pressed={viewMode === mode}
+                onClick={() => setViewMode(mode)}
+                className="inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-sm font-semibold text-[var(--muted-ink)] transition-colors hover:bg-[var(--learning-mist)] aria-pressed:bg-[var(--ink)] aria-pressed:text-white"
               >
-                <List className="h-4 w-4" />
-                List
+                <Icon aria-hidden="true" className="h-4 w-4" />
+                {label}
               </button>
-              <button
-                type="button"
-                onClick={() => setViewMode("grid")}
-                className={`focus-ring inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm transition ${
-                  viewMode === "grid"
-                    ? "bg-[#111111] text-[#f4f0e8]"
-                    : "text-[#5f6b73] hover:bg-black/[0.06]"
-                }`}
-              >
-                <Grid2X2 className="h-4 w-4" />
-                Grid
-              </button>
-            </div>
-          </div>
-        </Reveal>
-
-        {viewMode === "list" ? (
-          <div className="mt-12 border-t border-black/15">
-            {projects.map((project, index) => (
-              <Reveal key={project.slug} delay={index * 0.05}>
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="group grid gap-6 border-b border-black/15 py-7 transition hover:bg-black/[0.035] md:grid-cols-[5rem_1fr_12rem]"
-                >
-                  <p className="editorial-label">
-                    <ScrambleText text={`0${index + 1}`} />
-                  </p>
-                  <div>
-                    <p className="text-3xl font-semibold tracking-[-0.055em] text-[#111111] md:text-5xl">
-                      {project.title}
-                    </p>
-                    <p className="mt-4 max-w-2xl text-base leading-7 text-[#5f6b73]">
-                      {project.summary}
-                    </p>
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {project.stack.slice(0, 4).map((item) => (
-                        <span
-                          key={item}
-                          className="rounded-full border border-black/15 px-3 py-1 text-xs text-[#5f6b73]"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="relative overflow-hidden rounded-2xl border border-black/15 bg-[#111111]">
-                    <Image
-                      src={project.coverImageUrl}
-                      alt={project.coverImageAlt}
-                      width={420}
-                      height={280}
-                      className="aspect-[4/3] object-cover transition duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-[#f4f0e8] text-[#111111] transition group-hover:translate-x-1">
-                      <ArrowRight className="h-4 w-4" />
-                    </div>
-                  </div>
-                </Link>
-              </Reveal>
             ))}
           </div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3"
-          >
-            {projects.map((project, index) => (
+        </div>
+
+        <ul className={isGrid ? "mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" : "mt-8 grid gap-3"}>
+          {projects.map((project) => (
+            <li key={project.slug}>
               <Link
-                key={project.slug}
                 href={`/projects/${project.slug}`}
-                className="group paper-card overflow-hidden rounded-[1.8rem] p-3 transition hover:-translate-y-1 hover:border-black/30"
+                className={`group grid h-full rounded-xl border border-[var(--rule)] bg-white/40 p-3 transition-colors hover:border-[var(--accent)] hover:bg-white/80 ${isGrid ? "content-start" : "md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:grid-cols-[18rem_minmax(0,1fr)]"}`}
               >
-                <Image
-                  src={project.coverImageUrl}
-                  alt={project.coverImageAlt}
-                  width={780}
-                  height={520}
-                  className="aspect-[16/10] rounded-[1.35rem] object-cover grayscale transition duration-500 group-hover:grayscale-0"
-                />
-                <div className="p-4">
-                  <p className="editorial-label">
-                    <ScrambleText text={`0${index + 1}`} />
-                  </p>
-                  <p className="mt-3 text-2xl font-semibold tracking-[-0.045em] text-[#111111]">
-                    {project.title}
-                  </p>
-                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-[#5f6b73]">
-                    {project.summary}
-                  </p>
+                <div className="relative aspect-[16/9] overflow-hidden rounded-lg bg-[var(--paper)]">
+                  <Image
+                    src={project.coverImageUrl}
+                    alt={project.coverImageAlt}
+                    fill
+                    sizes={isGrid ? "(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" : "(min-width: 1024px) 288px, (min-width: 768px) 33vw, 100vw"}
+                    className="object-cover object-top transition-transform duration-300 motion-safe:group-hover:scale-[1.03]"
+                  />
+                </div>
+                <div className="flex flex-col justify-center px-2 pb-2 pt-4 sm:p-5">
+                  <p className="font-mono text-xs uppercase tracking-wide text-[var(--accent)]">{project.year} · {project.role}</p>
+                  <div className="mt-2 flex items-start justify-between gap-3">
+                    <h3 className="text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">{project.title}</h3>
+                    <ArrowUpRight aria-hidden="true" className="mt-1 h-5 w-5 shrink-0 text-[var(--accent)]" />
+                  </div>
+                  <p className="mt-2 max-w-prose leading-relaxed text-[var(--muted-ink)]">{project.summary}</p>
+                  <ul aria-label="Technologies and topics" className="mt-4 flex flex-wrap gap-2">
+                    {project.stack.slice(0, 4).map((item) => (
+                      <li key={item} className="rounded-full border border-[var(--rule)] px-2.5 py-1 text-xs font-medium text-[var(--muted-ink)]">{item}</li>
+                    ))}
+                  </ul>
                 </div>
               </Link>
-            ))}
-          </motion.div>
-        )}
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

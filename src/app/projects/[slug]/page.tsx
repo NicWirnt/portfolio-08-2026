@@ -31,11 +31,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <AmbientBackground />
       <div className="mx-auto max-w-6xl">
         <Link
-          href="/"
-          className="focus-ring inline-flex items-center gap-2 rounded-full border border-black/15 px-4 py-2 text-sm text-[#5f6b73] transition hover:border-black hover:text-[#111111]"
+          href="/#projects"
+          className="focus-ring inline-flex min-h-11 items-center gap-2 rounded-full border border-black/15 px-4 py-2 text-sm text-[#5f6b73] transition hover:border-black hover:text-[#111111]"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to portfolio
+          Back to selected work
         </Link>
 
         <section className="grid gap-10 py-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -44,7 +44,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <p className="editorial-label">
                 {project.year} / {project.role}
               </p>
-              <h1 className="mt-5 text-6xl font-black uppercase leading-[0.86] tracking-[-0.08em] text-[#111111] md:text-8xl">
+              <h1 className="mt-5 text-balance break-words text-[clamp(2.6rem,7vw,5.3rem)] font-black leading-[0.94] tracking-[-0.065em] text-[var(--ink)]">
                 {project.title}
               </h1>
               <p className="mt-6 max-w-2xl text-xl leading-8 tracking-[-0.03em] text-[#333333]">
@@ -92,7 +92,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               alt={project.coverImageAlt}
               width={1400}
               height={900}
-              className="aspect-[4/3] rounded-[1.45rem] object-cover"
+              sizes="(min-width: 1024px) 540px, 100vw"
+              className="aspect-[16/10] w-full rounded-[1.45rem] object-cover object-top"
               priority
             />
           </Reveal>

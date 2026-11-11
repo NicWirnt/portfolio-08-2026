@@ -10,15 +10,17 @@ import { experiences, getFeaturedProjects, projects, skills } from "@/lib/portfo
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen overflow-hidden">
+    <>
       <AmbientBackground />
       <SiteHeader />
-      <HeroSection featuredProjects={getFeaturedProjects()} />
-      <ProjectShowcase projects={projects} />
-      <SkillGraph skills={skills} projects={projects} />
-      <TimelineSection experiences={experiences} />
-      <QaSection />
-      <ContactSection />
-    </main>
+      <main id="main-content" tabIndex={-1} className="min-h-screen">
+        <HeroSection featuredProjects={getFeaturedProjects()} />
+        <ProjectShowcase projects={projects} />
+        <SkillGraph skills={skills} projects={projects} />
+        <QaSection />
+        <TimelineSection experiences={experiences} />
+        <ContactSection />
+      </main>
+    </>
   );
 }
